@@ -1,0 +1,30 @@
+Calculate lHashTag as iHashtag
+Calculate lHashTag as trim(lHashTag,kTrue,kFalse,'#')
+
+Begin text block
+
+Switch iTwitterBtnType
+	Case 0
+		Text: {<div><a href="https://twitter.com/intent/tweet?screen_name=[iTwitterName]&text=[iShareText]" class="twitter-mention-button" data-size="large">}
+		Text: {Tweet to @[iTwitterName]</a></div>}
+	Case 1
+		Text: {<div><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://[iShareUrl]" data-text="[iShareText]" data-size="large" data-hashtags="[iHashtags]">Tweet</a> </div>}
+	Case 2
+		Text: {<div><a href="https://twitter.com/[iFollowTwitterUser]" class="twitter-follow-button"}
+		Text: { data-show-count="[pick(iShowFollowers,'false','true')]" data-size="large">}
+		Text: {Follow @[iFollowTwitterUser]}
+		Text: {</a></div>}
+	Case 3
+		Calculate lShareText as replaceall(iShareText,' ','%20')     ;; escape spaces
+		Text: {<div><a href="https://twitter.com/intent/tweet?button_hashtag=[lHashTag]}
+		Text: {&text=[lShareText]" class="twitter-hashtag-button" data-size="large">}
+		Text: {Tweet [iTweetMsg] </a></div>}
+End Switch
+
+End text block
+Get text block lTwitterBtnText
+
+Do $cinst.$objs.twitterBtn.$html.$assign(lTwitterBtnText)
+
+;  update the twitter feed
+Do $cinst.$loadTwitterWidgets()

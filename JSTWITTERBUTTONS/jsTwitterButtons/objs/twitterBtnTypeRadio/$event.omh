@@ -1,0 +1,5 @@
+On evClick
+	Calculate lPane as pNewVal
+	Calculate lPane as (lPane*1)+1     ;; st/js/1392
+	Do $cinst.$objs.optionsPane.$currentpage.$assign(lPane)
+	Do $cinst.$setTwitterBtn()
